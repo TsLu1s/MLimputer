@@ -39,21 +39,20 @@ pip install mlimputer
     
 ## MLimputer - Null Imputation Framework
     
-The first needed step after importing the package is to load a dataset and define your DataTime and to be predicted Target column and rename them to 'Date' and 'y', respectively.
-The following step is to define your future running pipeline parameters variables, this being:
-* Train_size: Length of Train data in wich will be applied the first Expanding Window iteration;  
-* Forecast_Size: Full length of test/future ahead predictions;
-* Window_Size: Length of sliding window, Window_Size>=Forecast_Size is recommended;
-* Granularity: Valid interval of periods correlated to data -> 1m,30m,1h,1d,1wk,1mo (default='1d');
-* Eval_Metric: Default predictive evaluation metric (eval_metric) is "MAE" (Mean Absolute Error), other options are "MAPE" (Mean Absolute Percentage Error) and "MSE"
-(Mean Squared Error);
-* List_Models: Select all the models intented do run in `pred_performance` function. To compare predictive performance of all available models set paramater `list_models`=['RandomForest','ExtraTrees','GBR','KNN','GeneralizedLR','XGBoost','H2O_AutoML','AutoKeras',
-              'AutoArima','Prophet','NeuralProphet'];
-* Model_Configs: Nested dictionary in wich are contained all models and specific hyperparameters configurations. Feel free to customize each model as you see fit; 
- 
-The `pred_performance` function compares all segmented windows values (predicted and real) for each selected and configurated model then calculates it's predicted performance error metrics, returning the variable `best_model`[String] (most effective model), `perf_results`[DataFrame] containing every detailed measure of each Test predicted value and at last the variable `predictions`[DataFrame] containing every segmented window iteration performed wich can be use for analysis and objective models comparison. 
+The first needed step after importing the package is to load a dataset (split it) and define your choosen imputation model.
+The model options for imputate the missing data in your dataset are following:
+* `RandomForest`
+* `ExtraTrees`
+* `GBR`
+* `KNN`
+* `GeneralizedLR`
+* `XGBoost`
+* `Lightgbm`
 
-The `pred_results` function forecasts the future values based on the previously predefined parameters and the `selected model` wich specifies the choosen model used to obtain future predictions.
+After choosing fiting your model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can imputate the future datasets (validate, test ...) with the same data properties. 
+
+Through the `cross_validation` function you can also compare the predictive performance evalution of multiple imputations, in which you can validade what imputation model fits better your future predictions.
+
     
 Importante Note:
 
