@@ -90,7 +90,7 @@ test_xgb=mli.transform_imput(Dataset=test,fit_configs=imputer_xgb)
 
 #(...)
     
-## Performance Evaluation Example
+## Performance Evaluation Example - Imputation CrossValidation
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
