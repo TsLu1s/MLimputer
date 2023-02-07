@@ -110,64 +110,6 @@ output = open("imputer_xgb.pkl", 'wb')
 pickle.dump(imputer_xgb, output)
 
 ```  
-
-## 2. TSForecasting - Extra Auxiliar Functions
-
-The `model_prediction` function predicts your Test target column based on the input DataFrames, Train and Test, model configuration set by the parameter `model_configs` and the selected running algorithm in the parameter `algo` (default='RandomForest'). Note, you can select and customize any of the 11 models available in `Model_Configs` dictionary.
-    
-```py     
- 
-# Automated Model Predictions
- 
-y_predict = tsf.model_prediction(Train:pd.DataFrame,
-                                 Test:pd.DataFrame,
-                                 target:str="y",
-                                 model_configs:dict=Model_Configs,
-                                 algo:str='RandomForest')
-```       
-    
-    
-The `engin_date` function converts and transforms columns of Datetime type into additional columns (Year, Day of the  Year, Season, Month, Day of the month, Day of the week, Weekend, Hour, Minute) which will be added by association to the input dataset and subsequently deletes the original column if variable Drop=True.
-
-The `multivariable_lag` function creats all the past lags automatically (in accordance to `range_lags` parameter) and adds each column into the input DataFrame.
- 
-```py   
-
-# Feature Engineering 
-    
-Dataset = tsf.engin_date(Dataset:pd.DataFrame,
-                         Drop:bool=False) 
-
-Dataset = tsf.multivariable_lag(Dataset:pd.DataFrame,
-                                target:str="y",
-                                range_lags:list=[1,10],
-                                drop_na:bool=True)
-    
-```
-
-This `feature_selection_tb` function filters the most valuable features from the dataset. It's based on calculated variable importance in tree based regression models from Scikit-Learn and it can be customized by use of the parameter `total_vi` (total sum of relative variable\feature importance percentage selected) and `algo` selecting the model for evaluation ('ExtraTrees','RandomForest' and 'GBR').
-
-```py  
-
-# Feature Selection 
-
-selected_Columns, selected_importance_df=tsf.feature_selection_tb(Dataset:pd.DataFrame,
-                                                                  target:str="y",
-                                                                  total_vi:float=0.99,
-                                                                  algo:str="ExtraTrees",
-                                                                  estimators:int=250)
- ```   
-    
-You can analyse the obtained performance results by using the `metrics_regression` function wich contains the most used metrics for regression predictive contexts.
-    
-```py  
- 
-# Regression Performance Metrics
-
-reg_performance = pd.DataFrame(tsf.metrics_regression(y_true,y_pred),index=[0])    # y_true:list, y_pred:list
-        
-```
-
     
 ## License
 
