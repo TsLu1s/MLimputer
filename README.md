@@ -48,6 +48,7 @@ The imputate model options for handling the missing data in your dataset are the
 * `GeneralizedLR`
 * `XGBoost`
 * `Lightgbm`
+* `CatBoost`
 
 After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can imputate the future datasets (validate, test ...) with the same data properties. 
 
