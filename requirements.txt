@@ -1,0 +1,3 @@
+scikit-learn>=1.0.2
+atlantic>=1.0.12
+catboost>=1.1.1
