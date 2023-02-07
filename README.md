@@ -47,7 +47,7 @@ The imputation model options for handling the missing data in your dataset are t
 * `GeneralizedLR`
 * `XGBoost`
 * `Lightgbm`
-* `CatBoost`
+* `Catboost`
 
 After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can impute the future datasets (validate, test ...) with the same data properties. 
 
@@ -73,7 +73,7 @@ data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
 train, test= train_test_split(data, train_size=0.8)
     
 imp_model="RandomForest"  
-# All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","GeneralizedLR","XGBoost","Lightgbm"
+# All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","GeneralizedLR","XGBoost","Lightgbm","Catboost"
 
 # Imputation Example 1 : RandomForest
 
