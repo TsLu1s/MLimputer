@@ -54,7 +54,7 @@ After fitting your imputation model, you can load the `imputer` variable into `f
 Through the `cross_validation` function you can also compare the predictive performance evalution of multiple imputations, allowing you to validate which imputation model fits better your future predictions.
 
     
-Importante Note:
+Importante Notes:
 
 * The actual version of this package does not incorporate the imputing of categorical values, at this stage, only the automatic handling of numeric missing values is implemented.
 
