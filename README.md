@@ -5,9 +5,10 @@
   
 ## Framework Contextualization <a name = "ta"></a>
 
-The `MLimputer` project constitutes an complete and integrated pipeline to Automate Time Series Forecasting applications through the implementation of multivariate approaches integrating regression models referring to modules such as SKLearn, H2O.ai, Autokeras and also univariate approaches of more classics methods such as Prophet, NeuralProphet and AutoArima, this following an 'Expanding Window' performance evaluation.
+The `MLimputer` project constitutes an complete and integrated pipeline to automate the handling of missing values in Datasets through regression prediction and aims at reducing bias and increase the precision of imputation results when compared to more classic single imputation methods.
+This package provides multiple algorithm options to impute your data, in which every observed data column with existing missing values is fitted and subsequently predicted with a robust preprocessing approach.
 
-The architecture design includes five main sections, these being: data preprocessing, feature engineering, hyperparameter optimization, forecast ensembling and forecasting method selection which are organized and customizable in a pipeline structure.
+The architecture design includes three main sections, these being: missing data analysis, data preprocessing and predictive method selection which are organized in a pipeline structure.
 
 This project aims at providing the following application capabilities:
 
@@ -38,7 +39,7 @@ pip install mlimputer
 # Usage Examples
     
 The first needed step after importing the package is to load a dataset (split it) and define your choosen imputation model in`fit_imput` function.
-The imputate model options for handling the missing data in your dataset are the following:
+The imputation model options for handling the missing data in your dataset are the following:
 * `RandomForest`
 * `ExtraTrees`
 * `GBR`
@@ -48,18 +49,18 @@ The imputate model options for handling the missing data in your dataset are the
 * `Lightgbm`
 * `CatBoost`
 
-After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can imputate the future datasets (validate, test ...) with the same data properties. 
+After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can impute the future datasets (validate, test ...) with the same data properties. 
 
 Through the `cross_validation` function you can also compare the predictive performance evalution of multiple imputations, allowing you to validate which imputation model fits better your future predictions.
 
-    
 Importante Notes:
 
-* The actual version of this package does not incorporate the imputing of categorical values, at this stage, just the automatic handling of numeric missing values is implemented.
+* The actual version of this package does not incorporate the imputing of categorical values, just the automatic handling of numeric missing values is implemented.
 
     
 ```py
 
+    
 import mlimputer as mli
 import pandas as pd
 import numpy as np
@@ -106,6 +107,7 @@ leaderboard_xgb_imp=mli.cross_validation(Dataset=train_xgb,
 import pickle 
 output = open("imputer_xgb.pkl", 'wb')
 pickle.dump(imputer_xgb, output)
+    
 
 ```  
     
