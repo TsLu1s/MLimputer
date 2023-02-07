@@ -57,7 +57,7 @@ Through the `cross_validation` function you can also compare the predictive perf
     
 Importante Notes:
 
-* The actual version of this package does not incorporate the imputing of categorical values, at this stage, only the automatic handling of numeric missing values is implemented.
+* The actual version of this package does not incorporate the imputing of categorical values, at this stage, just the automatic handling of numeric missing values is implemented.
 
     
 ```py
