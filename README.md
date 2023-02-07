@@ -37,8 +37,6 @@ pip install mlimputer
 
 # Usage Examples
     
-## MLimputer - Null Imputation Framework
-    
 The first needed step after importing the package is to load a dataset (split it) and define your choosen imputation model in`fit_imput` function.
 The imputate model options for handling the missing data in your dataset are the following:
 * `RandomForest`
