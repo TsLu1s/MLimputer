@@ -13,7 +13,7 @@ This project aims at providing the following application capabilities:
 
 * General applicability on tabular datasets: The developed imputation procedures are applicable on any data table associated with any Supervised ML scopes, based on missing data columns to be imputed.
     
-* Robustness and improvement of predictive results: The application of the MLimputer preprocessing aims at improve the predictive performance and simplify the imputation of existing missing values in the Dataset input columns. 
+* Robustness and improvement of predictive results: The application of the MLimputer preprocessing aims at improve the predictive performance through optimized imputation of existing missing values in the Dataset input columns. 
    
 #### Main Development Tools <a name = "pre1"></a>
 
