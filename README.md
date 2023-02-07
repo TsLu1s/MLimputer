@@ -37,7 +37,7 @@ pip install mlimputer
 
 # Usage Examples
     
-## 1. MLimputer - Null Imputation Framework
+## MLimputer - Null Imputation Framework
     
 The first needed step after importing the package is to load a dataset and define your DataTime and to be predicted Target column and rename them to 'Date' and 'y', respectively.
 The following step is to define your future running pipeline parameters variables, this being:
