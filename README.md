@@ -21,7 +21,7 @@ Major frameworks used to built this project:
 
 * [Pandas](https://pandas.pydata.org/)
 * [Sklearn](https://scikit-learn.org/stable/)
-* [Catboost](https://catboost.ai/)
+* [CatBoost](https://catboost.ai/)
     
 ## Where to get it <a name = "ta"></a>
     
@@ -62,41 +62,52 @@ Importante Note:
     
 ```py
 
-import tsforecasting as tsf
+import mlimputer as mli
 import pandas as pd
-import h2o
-
-h2o.init() # -> Run only if using H2O_AutoML models   
-
-data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
-    
-data = data.rename(columns={'DateTime_Column': 'Date','Target_Name_Column':'y'})
-data=data[['Date',"y"]]
-    
-Train_size=0.95
-Forecast_Size=15
-Window_Size=Forecast_Size # Recommended
-Granularity='1d' # 1m,30m,1h,1d,1wk,1mo
-Eval_Metric="MAE" # MAPE, MSE
-List_Models=['RandomForest','ExtraTrees','KNN','XGBoost','AutoArima'] # ensemble example
-
+import numpy as np
+from sklearn.model_selection import train_test_split
 #import warnings
 #warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
-best_Model,perf_results,predictions=tsf.pred_performance(Dataset=data,
-                                                         train_size=Train_size,
-                                                         forecast_size=Forecast_Size,
-                                                         window_size=Window_Size,
-                                                         list_models=List_Models,
-                                                         model_configs=Model_Configs,
-                                                         granularity=Granularity,
-                                                         eval_metric=Eval_Metric)
-    
-Dataset_Pred=tsf.pred_results(Dataset=data,
-                              forecast_size=Forecast_Size,
-                              model_configs=Model_Configs,
-                              granularity=Granularity,
-                              selected_model=Best_Model)
+data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
+
+train, test= train_test_split(data, train_size=0.8)
+
+imp_model="RandomForest"  
+# All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","GeneralizedLR","XGBoost","Lightgbm"
+
+# Imputation Example 1 : RandomForest
+
+imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest")
+train_rf=mli.transform_imput(Dataset=train,fit_configs=imputer_rf)
+test_rf=mli.transform_imput(Dataset=test,fit_configs=imputer_rf)
+
+# Imputation Example 2 : XGBoost
+
+imputer_xgb=mli.fit_imput(Dataset=train,imput_model="XGBoost")
+train_xgb=mli.transform_imput(Dataset=train,fit_configs=imputer_xgb)
+test_xgb=mli.transform_imput(Dataset=test,fit_configs=imputer_xgb)
+
+
+# Performance Evaluation Example
+
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from catboost import CatBoostRegressor
+        
+leaderboard_xgb_imp=mli.cross_validation(Dataset=train_xgb,
+                                         target=Target, 
+                                         test_size=0.2,
+                                         n_splits=3,
+                                         models=[LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
+
+# Export Imputation Metadata
+
+# XGBoost Imputation Metadata
+import pickle 
+output = open("imputer_xgb.pkl", 'wb')
+pickle.dump(imputer_xgb, output)
+
 ```  
 
 ## 2. TSForecasting - Extra Auxiliar Functions
