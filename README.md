@@ -11,11 +11,9 @@ The architecture design includes five main sections, these being: data preproces
 
 This project aims at providing the following application capabilities:
 
-* General applicability on tabular datasets: The developed forecasting procedures are applicable on any data table associated with any Time Series Forecasting scopes, based on DateTime and Target columns to be predicted.
-
-* Hyperparameter optimization and customization: It provides full configuration for each model hyperparameter through the customization of `Model_Configs` variable dictionary values, allowing optimal performance to be obtained.
+* General applicability on tabular datasets: The developed imputation procedures are applicable on any data table associated with any Supervised ML scopes, based on missing data columns to be imputed.
     
-* Robustness and improvement of predictive results: The implementation of the TSForecasting pipeline aims to improve the predictive performance directly associated with the application of the best performing forecasting method. 
+* Robustness and improvement of predictive results: The application of the MLimputer preprocessing aims at improve the predictive performance and simplify the imputation of existing missing values in the Dataset input columns. 
    
 #### Main Development Tools <a name = "pre1"></a>
 
@@ -23,7 +21,7 @@ Major frameworks used to built this project:
 
 * [Pandas](https://pandas.pydata.org/)
 * [Sklearn](https://scikit-learn.org/stable/)
-* [Catboost](https://catboost.ai/)i)
+* [Catboost](https://catboost.ai/)
     
 ## Where to get it <a name = "ta"></a>
     
