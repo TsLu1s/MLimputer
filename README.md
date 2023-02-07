@@ -26,7 +26,7 @@ Major frameworks used to built this project:
     
 ## Where to get it <a name = "ta"></a>
     
-Binary installer for the latest released version is available at the Python Package Index (PyPI).   
+Binary installer for the latest released version is available at the Python Package Index [(PyPI)](https://pypi.org/project/mlimputer/).   
 
 ## Installation  
 
