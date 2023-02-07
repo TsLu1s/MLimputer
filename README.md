@@ -39,8 +39,8 @@ pip install mlimputer
     
 ## MLimputer - Null Imputation Framework
     
-The first needed step after importing the package is to load a dataset (split it) and define your choosen imputation model.
-The model options for imputate the missing data in your dataset are following:
+The first needed step after importing the package is to load a dataset (split it) and define your choosen imputation model in`fit_imput` function.
+The imputate model options for handling the missing data in your dataset are the following:
 * `RandomForest`
 * `ExtraTrees`
 * `GBR`
@@ -49,14 +49,14 @@ The model options for imputate the missing data in your dataset are following:
 * `XGBoost`
 * `Lightgbm`
 
-After choosing fiting your model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can imputate the future datasets (validate, test ...) with the same data properties. 
+After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can imputate the future datasets (validate, test ...) with the same data properties. 
 
-Through the `cross_validation` function you can also compare the predictive performance evalution of multiple imputations, in which you can validade what imputation model fits better your future predictions.
+Through the `cross_validation` function you can also compare the predictive performance evalution of multiple imputations, allowing you to validate which imputation model fits better your future predictions.
 
     
 Importante Note:
 
-* Although not advisable to forecast without evaluating predictive performance first, forecast can be done without using the `pred_performance` evaluation function, by replacing the `selected_model` parameter (default='RandomForest') in the `pred_results` function with any choosen model.
+* The actual version of this package does not incorporate the imputing of categorical values, at this stage, only the automatic handling of numeric missing values is implemented.
 
     
 ```py
