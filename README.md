@@ -73,6 +73,8 @@ data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
 
 train, test= train_test_split(data, train_size=0.8)
 
+## Multiple Imputation Usage
+    
 imp_model="RandomForest"  
 # All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","GeneralizedLR","XGBoost","Lightgbm"
 
@@ -90,7 +92,7 @@ test_xgb=mli.transform_imput(Dataset=test,fit_configs=imputer_xgb)
 
 #(...)
     
-# Performance Evaluation Example
+## Performance Evaluation Example
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
@@ -102,7 +104,7 @@ leaderboard_xgb_imp=mli.cross_validation(Dataset=train_xgb,
                                          n_splits=3,
                                          models=[LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
 
-# Export Imputation Metadata
+## Export Imputation Metadata
 
 # XGBoost Imputation Metadata
 import pickle 
