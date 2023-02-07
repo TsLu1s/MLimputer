@@ -65,8 +65,8 @@ import mlimputer as mli
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-#import warnings
-#warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
+import warnings
+warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
 data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
 
