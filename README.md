@@ -96,7 +96,7 @@ from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
         
 leaderboard_xgb_imp=mli.cross_validation(Dataset=train_xgb,
-                                         target=Target, 
+                                         target="Target_Name_Col", 
                                          test_size=0.2,
                                          n_splits=3,
                                          models=[LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
