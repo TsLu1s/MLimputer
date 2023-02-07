@@ -90,6 +90,7 @@ def imput_models(Train:pd.DataFrame,
         cb_params=parameters['Catboost']
         model = cb.CatBoostRegressor(**cb_params)
         model.fit(X_train, y_train)
+        
     elif algo=="Lightgbm":
         lb_params=parameters['Lightgbm']
         model = lgb.train(lb_params, X_train, num_boost_round=100)
