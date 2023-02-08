@@ -6,9 +6,9 @@
 ## Framework Contextualization <a name = "ta"></a>
 
 The `MLimputer` project constitutes an complete and integrated pipeline to automate the handling of missing values in Datasets through regression prediction and aims at reducing bias and increase the precision of imputation results when compared to more classic imputation methods.
-This package provides multiple algorithm options to impute your data (shown bellow), in which every observed data column with existing missing values is fitted and subsequently predicted with a robust preprocessing approach.
+This package provides multiple algorithm options to impute your data (shown bellow), in which every observed data column with existing missing values is fitted with a robust preprocessing approach and subsequently predicted.
 
-The architecture design includes three main sections, these being: missing data analysis, data preprocessing and predictive method selection which are organized in a pipeline structure.
+The architecture design includes three main sections, these being: missing data analysis, data preprocessing and predictive model imputation which are organized in a pipeline structure.
 
 This project aims at providing the following application capabilities:
 
