@@ -8,7 +8,9 @@ warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 #source_dataset="https://www.kaggle.com/datasets/cnic92/200-financial-indicators-of-us-stocks-20142018?select=2018_Financial_Data.csv"
 
 ## Join all years
-data= pd.read_csv('Data/2018_Financial_Data.csv', encoding='latin', delimiter=',')
+url="https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/2018_Financial_Data.csv"
+
+data= pd.read_csv(url, encoding='latin', delimiter=',')
 
 # replace all instances of "[", "]" or "<" with "_" in all columns of the dataframe
 data.columns = [col.replace("[", "_").replace("]", "_").replace("<", "_") for col in data.columns]
