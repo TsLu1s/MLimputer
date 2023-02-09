@@ -55,10 +55,3 @@ leaderboard_xgb_imp=mli.cross_validation(Dataset=df,
                                          test_size=0.2,
                                          n_splits=3,
                                          models=[XGBClassifier(), RandomForestClassifier(), DecisionTreeClassifier()])
-
-
-
-
-
-
-
