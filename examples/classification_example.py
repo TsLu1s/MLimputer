@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 ## Join all years
 url="https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/2018_Financial_Data.csv"
 
-data= pd.read_csv(url, encoding='latin', delimiter=',')
+data=pd.read_csv(url, encoding='latin', delimiter=',')
 
 # replace all instances of "[", "]" or "<" with "_" in all columns of the dataframe
 data.columns = [col.replace("[", "_").replace("]", "_").replace("<", "_") for col in data.columns]
