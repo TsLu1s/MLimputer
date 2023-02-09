@@ -11,8 +11,6 @@ import catboost as cb
 import xgboost
 import lightgbm as lgb 
 
-##### Missing Data Imputation Framework for Supervised Machine Learning
-
 parameters ={'RandomForest':{'n_estimators':250,'random_state':42,'criterion':"squared_error",
                              'max_depth':None,'max_features':"auto"},
              'ExtraTrees':{'n_estimators':250,'random_state':42,'criterion':"squared_error",
@@ -32,9 +30,6 @@ parameters ={'RandomForest':{'n_estimators':250,'random_state':42,'criterion':"s
                           'max_model_size':None,'epochs':50},
              'Catboost':{'verbose':False}
              }
-
-### Search customizable parameters options for each model!!!
-#### Compare Running time customizable model configs (n_estimatores)
 
 def imput_models(Train:pd.DataFrame,
                  target:str="y",
@@ -95,6 +90,7 @@ def imput_models(Train:pd.DataFrame,
         cb_params=parameters['Catboost']
         model = cb.CatBoostRegressor(**cb_params)
         model.fit(X_train, y_train)
+        
     elif algo=="Lightgbm":
         lb_params=parameters['Lightgbm']
         model = lgb.train(lb_params, X_train, num_boost_round=100)
@@ -129,8 +125,7 @@ def missing_report(Dataset:pd.DataFrame):
     return df_md
 
 def fit_imput(Dataset:pd.DataFrame,
-              imput_model:str="KNN"):# Add Algo,  
-              #,selected_cols:list):
+              imput_model:str="KNN"):
               #,imputation_order="ascending","descending","random"):
     """
     This function fits missing data in a pandas dataframe using the imputation method specified by the user.
@@ -273,7 +268,7 @@ def cross_validation(Dataset:pd.DataFrame, target:str, test_size:float=0.2, n_sp
     for i in range(n_splits):
         X_train, X_test, y_train, y_test = train_test_split(Dataset, y, test_size=test_size)
         print(f"Fold number: {i + 1}")
-        ##### Confirmar divisão  X_train, X_test, y_train, y_test
+
         X_train,X_test=X_train.drop([target], axis=1),X_test.drop([target], axis=1)
         for model in models:
             print(f"Fitting {model.__class__.__name__} model")
