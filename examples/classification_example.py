@@ -55,3 +55,10 @@ leaderboard_xgb_imp=mli.cross_validation(Dataset=df,
                                          test_size=0.2,
                                          n_splits=3,
                                          models=[XGBClassifier(), RandomForestClassifier(), DecisionTreeClassifier()])
+
+## Export Imputation Metadata
+# XGBoost Imputation Metadata
+import pickle 
+output = open("imputer_xgb.pkl", 'wb')
+pickle.dump(imputer_xgb, output)
+
