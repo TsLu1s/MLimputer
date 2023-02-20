@@ -5,36 +5,42 @@ from sklearn.model_selection import train_test_split
 import warnings
 warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
-#source_dataset="https://www.kaggle.com/datasets/cnic92/200-financial-indicators-of-us-stocks-20142018?select=2018_Financial_Data.csv"
+#source_data="https://www.kaggle.com/datasets/surekharamireddy/fraudulent-claim-on-cars-physical-damage"
 
-## Join all years
-url="https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/2018_Financial_Data.csv"
+url="https://raw.githubusercontent.com/TsLu1s/Atlantic/main/data/Fraudulent_Claim_Cars_class.csv"
+data= pd.read_csv(url) # Dataframe Loading Example
 
-data=pd.read_csv(url, encoding='latin', delimiter=',')
+data.isna().sum()
+data.dtypes
 
-# replace all instances of "[", "]" or "<" with "_" in all columns of the dataframe
-data.columns = [col.replace("[", "_").replace("]", "_").replace("<", "_") for col in data.columns]
-
-target="Class"
+target="fraud"
+data[target]=data[target].astype('category')
 data=data[data[target].isnull()==False]
 data=data.reset_index(drop=True)
 
-train,test = train_test_split(data, train_size=0.8)
+train,test = train_test_split(data, train_size=0.8) 
 train,test = train.reset_index(drop=True), test.reset_index(drop=True)
 
-# All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","GeneralizedLR","XGBoost","Lightgbm","Catboost"
+# All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","XGBoost","Lightgbm","Catboost"
 
 # Imputation Example 1 : RandomForest
 
-imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest")
+parameters_=mli.imputer_parameters()
+## Customizing parameters settings
+
+parameters_["RandomForest"]["n_estimators"]=40
+parameters_["KNN"]["n_neighbors"]=5
+print(parameters_)
+
+imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest",imputer_configs=parameters_)
 train_rf=mli.transform_imput(Dataset=train,fit_configs=imputer_rf)
 test_rf=mli.transform_imput(Dataset=test,fit_configs=imputer_rf)
 
-# Imputation Example 2 : XGBoost
+# Imputation Example 2 : KNN
 
-imputer_xgb=mli.fit_imput(Dataset=train,imput_model="XGBoost")
-train_xgb=mli.transform_imput(Dataset=train,fit_configs=imputer_xgb)
-test_xgb=mli.transform_imput(Dataset=test,fit_configs=imputer_xgb)
+imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=parameters_)
+train_knn=mli.transform_imput(Dataset=train,fit_configs=imputer_knn)
+test_knn=mli.transform_imput(Dataset=test,fit_configs=imputer_knn)
     
 ## Performance Evaluation Example - Imputation CrossValidation
 
@@ -45,20 +51,19 @@ import atlantic as atl
 
 ## Preprocessing Data (Label Encoder)
 
-le_fit=atl.fit_Label_Encoding(train_xgb,target)
-df=atl.transform_Label_Encoding(train_xgb,le_fit)
+le_fit=atl.fit_Label_Encoding(train_knn,target)
+df=atl.transform_Label_Encoding(train_knn,le_fit)
 df=df.reset_index(drop=True)
 df[target]=df[target].astype('category')
 
-leaderboard_xgb_imp=mli.cross_validation(Dataset=df,
+leaderboard_knn_imp=mli.cross_validation(Dataset=df,
                                          target=target, 
                                          test_size=0.2,
                                          n_splits=3,
                                          models=[XGBClassifier(), RandomForestClassifier(), DecisionTreeClassifier()])
 
-## Export Imputation Metadata
-# XGBoost Imputation Metadata
-import pickle 
-output = open("imputer_xgb.pkl", 'wb')
-pickle.dump(imputer_xgb, output)
+
+#import pickle 
+#output = open("imputer_knn.pkl", 'wb')
+#pickle.dump(imputer_knn, output)
 
