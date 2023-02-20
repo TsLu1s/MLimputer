@@ -15,7 +15,7 @@ This project aims at providing the following application capabilities:
 * General applicability on tabular datasets: The developed imputation procedures are applicable on any data table associated with any Supervised ML scopes, based on missing data columns to be imputed.
     
 * Robustness and improvement of predictive results: The application of the MLimputer preprocessing aims at improve the predictive performance through optimized imputation of existing missing values in the Dataset input columns. 
-   
+
 #### Main Development Tools <a name = "pre1"></a>
 
 Major frameworks used to built this project: 
@@ -44,12 +44,11 @@ The imputation model options for handling the missing data in your dataset are t
 * `ExtraTrees`
 * `GBR`
 * `KNN`
-* `GeneralizedLR`
 * `XGBoost`
 * `Lightgbm`
 * `Catboost`
 
-After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can impute the future datasets (validate, test ...) with the same data properties. 
+After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can impute the future datasets (validate, test ...) with the same data properties. Note, as it shows in the example bellow, you can also customize your model imputer parameters by changing it's configurations and then, implementing them in the `imputer_configs` function parameter.
 
 Through the `cross_validation` function you can also compare the predictive performance evalution of multiple imputations, allowing you to validate which imputation model fits better your future predictions.
 
@@ -72,21 +71,29 @@ data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
 
 train, test= train_test_split(data, train_size=0.8)
 train,test=train.reset_index(drop=True), test.reset_index(drop=True) # <- Required
-    
-# All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","GeneralizedLR","XGBoost","Lightgbm","Catboost"
 
+# All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","XGBoost","Lightgbm","Catboost"
+
+# Model Imputer Customization
+parameters_=mli.imputer_parameters()
+
+# Customizing parameters settings
+parameters_["RandomForest"]["n_estimators"]=40
+parameters_["KNN"]["n_neighbors"]=5
+print(parameters_)
+    
 # Imputation Example 1 : RandomForest
 
-imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest")
+imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest",imputer_configs=parameters_)
 train_rf=mli.transform_imput(Dataset=train,fit_configs=imputer_rf)
 test_rf=mli.transform_imput(Dataset=test,fit_configs=imputer_rf)
 
-# Imputation Example 2 : XGBoost
+# Imputation Example 2 : KNN
 
-imputer_xgb=mli.fit_imput(Dataset=train,imput_model="XGBoost")
-train_xgb=mli.transform_imput(Dataset=train,fit_configs=imputer_xgb)
-test_xgb=mli.transform_imput(Dataset=test,fit_configs=imputer_xgb)
-
+imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=parameters_)
+train_knn=mli.transform_imput(Dataset=train,fit_configs=imputer_knn)
+test_knn=mli.transform_imput(Dataset=test,fit_configs=imputer_knn)
+    
 #(...)
     
 ## Performance Evaluation Example - Imputation CrossValidation
@@ -95,7 +102,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
         
-leaderboard_xgb_imp=mli.cross_validation(Dataset=train_xgb,
+leaderboard_knn_imp=mli.cross_validation(Dataset=train_knn,
                                          target="Target_Name_Col", 
                                          test_size=0.2,
                                          n_splits=3,
@@ -103,12 +110,11 @@ leaderboard_xgb_imp=mli.cross_validation(Dataset=train_xgb,
 
 ## Export Imputation Metadata
 
-# XGBoost Imputation Metadata
+# KNN Imputation Metadata
 import pickle 
-output = open("imputer_xgb.pkl", 'wb')
-pickle.dump(imputer_xgb, output)
+output = open("imputer_knn.pkl", 'wb')
+pickle.dump(imputer_knn, output)
     
-
 ```  
     
 ## License
