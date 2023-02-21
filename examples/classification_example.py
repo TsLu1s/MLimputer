@@ -36,7 +36,7 @@ imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=parame
 train_knn=mli.transform_imput(Dataset=train,fit_configs=imputer_knn)
 test_knn=mli.transform_imput(Dataset=test,fit_configs=imputer_knn)
 
-# Imputation Example 2 : RandomForest
+# Imputation Example 2 : GradientBoostingRegressor
 
 imputer_gbr=mli.fit_imput(Dataset=train,imput_model="GBR",imputer_configs=parameters_)
 train_gbr=mli.transform_imput(Dataset=train,fit_configs=imputer_gbr)
