@@ -56,6 +56,7 @@ df=atl.transform_Label_Encoding(train_knn,le_fit)
 df=df.reset_index(drop=True)
 df[target]=df[target].astype('category')
 
+# Replace the problematic characters with underscores in the column names
 df.rename(columns=lambda x: x.replace("[", "_").replace("]", "_").replace("<", "_").replace(">", "_"), inplace=True)
 
 leaderboard_knn_imp=mli.cross_validation(Dataset=df,
