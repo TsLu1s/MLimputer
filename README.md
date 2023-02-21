@@ -79,7 +79,7 @@ parameters_=mli.imputer_parameters()
 
 # Customizing parameters settings
 parameters_["RandomForest"]["n_estimators"]=40
-parameters_["KNN"]["n_neighbors"]=5
+parameters_["KNN"]["n_neighbors"]=3
 print(parameters_)
     
 # Imputation Example 1 : RandomForest
