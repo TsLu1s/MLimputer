@@ -27,7 +27,7 @@ parameters_=mli.imputer_parameters()
 ## Customizing parameters settings
 
 parameters_["GBR"]["n_estimators"]=15
-parameters_["KNN"]["n_neighbors"]=5
+parameters_["KNN"]["n_neighbors"]=3
 print(parameters_)
 
 # Imputation Example 1 : KNN
@@ -55,6 +55,8 @@ le_fit=atl.fit_Label_Encoding(train_knn,target)
 df=atl.transform_Label_Encoding(train_knn,le_fit)
 df=df.reset_index(drop=True)
 df[target]=df[target].astype('category')
+
+df.rename(columns=lambda x: x.replace("[", "_").replace("]", "_").replace("<", "_").replace(">", "_"), inplace=True)
 
 leaderboard_knn_imp=mli.cross_validation(Dataset=df,
                                          target=target, 
