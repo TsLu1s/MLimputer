@@ -5,8 +5,8 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
-    name="MLimputer",
-    version="0.0.95",
+    name="mlimputer",
+    version="0.1.02",
     description="MLimputer - Null Imputation Framework for Supervised Machine Learning",
     long_description=long_description,      
     long_description_content_type="text/markdown",
@@ -14,7 +14,6 @@ setuptools.setup(
     author="Luís Santos",
     author_email="luisf_ssantos@hotmail.com",
     license="MIT",
-    packages=setuptools.find_packages(),
     classifiers=[
         # Indicate who your project is intended for
         "Intended Audience :: Education",
@@ -33,7 +32,8 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
     ],
     py_modules=["mlimputer"],
-    package_dir={"": "src/mlimputer"},  
+    packages=setuptools.find_packages(where="src"),
+    package_dir={"": "src"},  
     keywords=[
         "data science",
         "machine learning",
