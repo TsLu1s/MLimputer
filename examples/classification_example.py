@@ -5,15 +5,15 @@ from sklearn.model_selection import train_test_split
 import warnings
 warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
-#source_data="https://www.kaggle.com/datasets/surekharamireddy/fraudulent-claim-on-cars-physical-damage"
+#source_data="https://www.kaggle.com/datasets/cnic92/200-financial-indicators-of-us-stocks-20142018"
 
-url="https://raw.githubusercontent.com/TsLu1s/Atlantic/main/data/Fraudulent_Claim_Cars_class.csv"
+url="https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/2018_Financial_Data.csv"
 data= pd.read_csv(url) # Dataframe Loading Example
 
 data.isna().sum()
 data.dtypes
 
-target="fraud"
+target="Class"
 data[target]=data[target].astype('category')
 data=data[data[target].isnull()==False]
 data=data.reset_index(drop=True)
@@ -23,24 +23,24 @@ train,test = train.reset_index(drop=True), test.reset_index(drop=True)
 
 # All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","XGBoost","Lightgbm","Catboost"
 
-# Imputation Example 1 : RandomForest
-
 parameters_=mli.imputer_parameters()
 ## Customizing parameters settings
 
-parameters_["RandomForest"]["n_estimators"]=40
+parameters_["GBR"]["n_estimators"]=15
 parameters_["KNN"]["n_neighbors"]=5
 print(parameters_)
 
-imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest",imputer_configs=parameters_)
-train_rf=mli.transform_imput(Dataset=train,fit_configs=imputer_rf)
-test_rf=mli.transform_imput(Dataset=test,fit_configs=imputer_rf)
-
-# Imputation Example 2 : KNN
+# Imputation Example 1 : KNN
 
 imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=parameters_)
 train_knn=mli.transform_imput(Dataset=train,fit_configs=imputer_knn)
 test_knn=mli.transform_imput(Dataset=test,fit_configs=imputer_knn)
+
+# Imputation Example 2 : RandomForest
+
+imputer_gbr=mli.fit_imput(Dataset=train,imput_model="GBR",imputer_configs=parameters_)
+train_gbr=mli.transform_imput(Dataset=train,fit_configs=imputer_gbr)
+test_gbr=mli.transform_imput(Dataset=test,fit_configs=imputer_gbr)
     
 ## Performance Evaluation Example - Imputation CrossValidation
 
