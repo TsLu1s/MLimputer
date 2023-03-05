@@ -27,6 +27,7 @@ parameters_=mli.imputer_parameters()
 ## Customizing parameters settings
 
 parameters_["GBR"]["n_estimators"]=15
+parameters_["GBR"]["loss"]="squared_error"
 parameters_["KNN"]["n_neighbors"]=3
 print(parameters_)
 
