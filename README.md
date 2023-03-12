@@ -5,17 +5,17 @@
   
 ## Framework Contextualization <a name = "ta"></a>
 
-The `MLimputer` project constitutes an complete and integrated pipeline to automate the handling of missing values in Datasets through regression prediction and aims at reducing bias and increase the precision of imputation results when compared to more classic imputation methods.
+The `MLimputer` project constitutes an complete and integrated pipeline to automate the handling of missing values in datasets through regression prediction and aims at reducing bias and increase the precision of imputation results when compared to more classic imputation methods.
 This package provides multiple algorithm options to impute your data (shown bellow), in which every observed data column with existing missing values is fitted with a robust preprocessing approach and subsequently predicted.
 
-The architecture design includes three main sections, these being: missing data analysis, data preprocessing and predictive model imputation which are organized in a pipeline structure.
+The architecture design includes three main sections, these being: missing data analysis, data preprocessing and predictive model imputation which are organized in a customizable pipeline structure.
 
 This project aims at providing the following application capabilities:
 
 * General applicability on tabular datasets: The developed imputation procedures are applicable on any data table associated with any Supervised ML scopes, based on missing data columns to be imputed.
     
-* Robustness and improvement of predictive results: The application of the MLimputer preprocessing aims at improve the predictive performance through optimized imputation of existing missing values in the Dataset input columns. 
-
+* Robustness and improvement of predictive results: The application of the MLimputer preprocessing aims at improve the predictive performance through customization and optimization of existing missing values imputation in the dataset input columns. 
+   
 #### Main Development Tools <a name = "pre1"></a>
 
 Major frameworks used to built this project: 
@@ -27,6 +27,8 @@ Major frameworks used to built this project:
 ## Where to get it <a name = "ta"></a>
     
 Binary installer for the latest released version is available at the Python Package Index [(PyPI)](https://pypi.org/project/mlimputer/).   
+
+The source code is currently hosted on GitHub at: https://github.com/TsLu1s/MLimputer
 
 ## Installation  
 
@@ -56,10 +58,8 @@ Importante Notes:
 
 * The actual version of this package does not incorporate the imputing of categorical values, just the automatic handling of numeric missing values is implemented.
 
-    
 ```py
 
-    
 import mlimputer as mli
 import pandas as pd
 import numpy as np
@@ -75,22 +75,22 @@ train,test=train.reset_index(drop=True), test.reset_index(drop=True) # <- Requir
 # All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","XGBoost","Lightgbm","Catboost"
 
 # Model Imputer Customization
-parameters_=mli.imputer_parameters()
+hparameters=mli.imputer_parameters()
 
 # Customizing parameters settings
-parameters_["RandomForest"]["n_estimators"]=40
-parameters_["KNN"]["n_neighbors"]=5
-print(parameters_)
+hparameters["RandomForest"]["n_estimators"]=40
+hparameters["KNN"]["n_neighbors"]=5
+print(hparameters)
     
 # Imputation Example 1 : RandomForest
 
-imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest",imputer_configs=parameters_)
+imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest",imputer_configs=hparameters)
 train_rf=mli.transform_imput(Dataset=train,fit_configs=imputer_rf)
 test_rf=mli.transform_imput(Dataset=test,fit_configs=imputer_rf)
 
 # Imputation Example 2 : KNN
 
-imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=parameters_)
+imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=hparameters)
 train_knn=mli.transform_imput(Dataset=train,fit_configs=imputer_knn)
 test_knn=mli.transform_imput(Dataset=test,fit_configs=imputer_knn)
     
@@ -114,7 +114,7 @@ leaderboard_knn_imp=mli.cross_validation(Dataset=train_knn,
 import pickle 
 output = open("imputer_knn.pkl", 'wb')
 pickle.dump(imputer_knn, output)
-    
+
 ```  
     
 ## License
