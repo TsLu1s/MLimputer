@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     name="mlimputer",
-    version="0.1.2",
+    version="1.0.0",
     description="MLimputer - Null Imputation Framework for Supervised Machine Learning",
     long_description=long_description,      
     long_description_content_type="text/markdown",
@@ -28,6 +28,7 @@ setuptools.setup(
 
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
