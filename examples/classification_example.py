@@ -25,22 +25,22 @@ train,test = train.reset_index(drop=True), test.reset_index(drop=True)
 
 hparameters=mli.imputer_parameters()
 ## Customizing parameters settings
-
+hparameters["RandomForest"]["n_estimators"]=15
 hparameters["GBR"]["n_estimators"]=15
 hparameters["KNN"]["n_neighbors"]=3
 print(hparameters)
 
 # Imputation Example 1 : KNN
 
-imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=hparameters)
-train_knn=mli.transform_imput(Dataset=train,fit_configs=imputer_knn)
-test_knn=mli.transform_imput(Dataset=test,fit_configs=imputer_knn)
+imputer_knn=mli.fit_imput(dataset=train,imput_model="KNN",imputer_configs=hparameters)
+train_knn=mli.transform_imput(dataset=train,fit_configs=imputer_knn)
+test_knn=mli.transform_imput(dataset=test,fit_configs=imputer_knn)
 
 # Imputation Example 2 : GradientBoostingRegressor
 
-imputer_gbr=mli.fit_imput(Dataset=train,imput_model="GBR",imputer_configs=hparameters)
-train_gbr=mli.transform_imput(Dataset=train,fit_configs=imputer_gbr)
-test_gbr=mli.transform_imput(Dataset=test,fit_configs=imputer_gbr)
+imputer_gbr=mli.fit_imput(dataset=train,imput_model="Catboost",imputer_configs=hparameters)
+train_gbr=mli.transform_imput(dataset=train,fit_configs=imputer_gbr)
+test_gbr=mli.transform_imput(dataset=test,fit_configs=imputer_gbr)
     
 ## Performance Evaluation Example - Imputation CrossValidation
 
@@ -59,7 +59,7 @@ df[target]=df[target].astype('category')
 # Replace the problematic characters with underscores in the column names
 df.rename(columns=lambda x: x.replace("[", "_").replace("]", "_").replace("<", "_").replace(">", "_"), inplace=True)
 
-leaderboard_knn_imp=mli.cross_validation(Dataset=df,
+leaderboard_knn_imp=mli.cross_validation(dataset=df,
                                          target=target, 
                                          test_size=0.2,
                                          n_splits=3,
