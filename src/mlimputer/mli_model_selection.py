@@ -15,7 +15,7 @@ from .mli_parameters import imputer_parameters
 
 parameters=imputer_parameters()
 
-def imput_models(Train:pd.DataFrame,
+def imput_models(train:pd.DataFrame,
                  target:str="y",
                  algo:str='RandomForest',
                  parameters:dict=parameters):
@@ -23,22 +23,22 @@ def imput_models(Train:pd.DataFrame,
     This function trains and returns a regression model based on the input data and specified algorithm.
     
     Parameters:
-    Train (pd.DataFrame): The input training data
+    train (pd.DataFrame): The input training data
     target (str, optional): The target column name in the training data. Default is 'y'
     algo (str, optional): The algorithm to be used for training. Default is 'RandomForest'
     parameters (dict, optional): The hyperparameters for the specified algorithm. Default is 'parameters'
     
     Returns:
-    model: Trained machine learning model.
+    model: trained machine learning model.
     """
     
-    sel_cols=list(Train.columns)
+    sel_cols=list(train.columns)
     sel_cols.remove(target)
     sel_cols.append(target)
-    Train=Train[sel_cols]
+    train=train[sel_cols]
     
-    X_train = Train.iloc[:, 0:(len(sel_cols)-1)].values
-    y_train = Train.iloc[:, (len(sel_cols)-1)].values
+    X_train = train.iloc[:, 0:(len(sel_cols)-1)].values
+    y_train = train.iloc[:, (len(sel_cols)-1)].values
     
     if algo=='RandomForest':
         rf_params=parameters['RandomForest']
@@ -80,12 +80,12 @@ def imput_models(Train:pd.DataFrame,
    
     return model
 
-def missing_report(Dataset:pd.DataFrame):
+def missing_report(dataset:pd.DataFrame):
     """
     This function generates a report of missing values in a given dataset.
     
     Parameters:
-    Dataset (pd.DataFrame): The input data to be analyzed for missing values
+    dataset (pd.DataFrame): The input data to be analyzed for missing values
     
     Returns:
     df_md (pd.DataFrame): A dataframe containing the count and percentage of missing values 
@@ -93,7 +93,7 @@ def missing_report(Dataset:pd.DataFrame):
     Sorted by the percentage of missing values in ascending order. <-***********
     """
     
-    df=Dataset.copy()
+    df=dataset.copy()
     
     num_cols=df.select_dtypes(include=['int','float']).columns.tolist()
     df_md = pd.DataFrame(df[num_cols].isna().sum().loc[df[num_cols].isna().sum() > 0], columns=['missing_data_count'])
@@ -104,7 +104,7 @@ def missing_report(Dataset:pd.DataFrame):
     
     return df_md
 
-def cross_validation(Dataset:pd.DataFrame, target:str, test_size:float=0.2, n_splits:int=5,models:list=[]):#=[LinearRegression(), RandomForestRegressor(), CatBoostRegressor()]):
+def cross_validation(dataset:pd.DataFrame, target:str, test_size:float=0.2, n_splits:int=5,models:list=[]):
     """
     This function performs cross-validation on the given dataset. The dataset is divided into training and test sets, 
     and then each model from the list is fit and evaluated on the test set. The performance of each model on the test
@@ -114,7 +114,7 @@ def cross_validation(Dataset:pd.DataFrame, target:str, test_size:float=0.2, n_sp
     
     Parameters:
     -----------
-    Dataset: pd.DataFrame
+    dataset: pd.DataFrame
         The input dataset to be evaluated.
     target: str
         The name of the target column.
@@ -131,10 +131,10 @@ def cross_validation(Dataset:pd.DataFrame, target:str, test_size:float=0.2, n_sp
         A dataframe containing the performance metrics of each model for each fold of the cross-validation.
     """
     
-    y,list_metrics=Dataset[target],[]
-    sv_pred=atl.target_type(Dataset, target)[0]
+    y,list_metrics=dataset[target],[]
+    sv_pred=atl.target_type(dataset, target)[0]
     for i in range(n_splits):
-        X_train, X_test, y_train, y_test = train_test_split(Dataset, y, test_size=test_size)
+        X_train, X_test, y_train, y_test = train_test_split(dataset, y, test_size=test_size)
         print(f"Fold number: {i + 1}")
 
         X_train,X_test=X_train.drop([target], axis=1),X_test.drop([target], axis=1)
