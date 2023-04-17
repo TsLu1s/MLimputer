@@ -82,15 +82,15 @@ print(hparameters)
     
 # Imputation Example 1 : RandomForest
 
-imputer_rf=mli.fit_imput(Dataset=train,imput_model="RandomForest",imputer_configs=hparameters)
-train_rf=mli.transform_imput(Dataset=train,fit_configs=imputer_rf)
-test_rf=mli.transform_imput(Dataset=test,fit_configs=imputer_rf)
+imputer_rf=mli.fit_imput(dataset=train,imput_model="RandomForest",imputer_configs=hparameters)
+train_rf=mli.transform_imput(dataset=train,fit_configs=imputer_rf)
+test_rf=mli.transform_imput(dataset=test,fit_configs=imputer_rf)
 
 # Imputation Example 2 : KNN
 
-imputer_knn=mli.fit_imput(Dataset=train,imput_model="KNN",imputer_configs=hparameters)
-train_knn=mli.transform_imput(Dataset=train,fit_configs=imputer_knn)
-test_knn=mli.transform_imput(Dataset=test,fit_configs=imputer_knn)
+imputer_knn=mli.fit_imput(dataset=train,imput_model="KNN",imputer_configs=hparameters)
+train_knn=mli.transform_imput(dataset=train,fit_configs=imputer_knn)
+test_knn=mli.transform_imput(dataset=test,fit_configs=imputer_knn)
     
 #(...)
     
@@ -100,7 +100,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
         
-leaderboard_knn_imp=mli.cross_validation(Dataset=train_knn,
+leaderboard_knn_imp=mli.cross_validation(dataset=train_knn,
                                          target="Target_Name_Col", 
                                          test_size=0.2,
                                          n_splits=3,
