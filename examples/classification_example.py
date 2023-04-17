@@ -25,7 +25,7 @@ train,test = train.reset_index(drop=True), test.reset_index(drop=True)
 
 hparameters=mli.imputer_parameters()
 ## Customizing parameters settings
-hparameters["RandomForest"]["n_estimators"]=15
+
 hparameters["GBR"]["n_estimators"]=15
 hparameters["KNN"]["n_neighbors"]=3
 print(hparameters)
@@ -38,7 +38,7 @@ test_knn=mli.transform_imput(dataset=test,fit_configs=imputer_knn)
 
 # Imputation Example 2 : GradientBoostingRegressor
 
-imputer_gbr=mli.fit_imput(dataset=train,imput_model="Catboost",imputer_configs=hparameters)
+imputer_gbr=mli.fit_imput(dataset=train,imput_model="GBR",imputer_configs=hparameters)
 train_gbr=mli.transform_imput(dataset=train,fit_configs=imputer_gbr)
 test_gbr=mli.transform_imput(dataset=test,fit_configs=imputer_gbr)
     
