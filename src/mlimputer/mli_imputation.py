@@ -28,6 +28,10 @@ def fit_imput(dataset:pd.DataFrame,
     df_md,c=missing_report(df),0
     imp_targets=list(df_md['columns']) 
         
+    for col in df.columns:
+        if df[col].isnull().all():
+            raise ValueError(f'Column {col} is filled with null values')
+    
     # Iterate over each column with missing data and fit the imputation method
     for col in tqdm(imp_targets, desc="Fitting Missing Data Columns", ncols=80): ## imp_targets:
         #print("**** Fitting Column:", col)
