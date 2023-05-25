@@ -96,9 +96,9 @@ def missing_report(dataset:pd.DataFrame):
     df=dataset.copy()
     
     num_cols=df.select_dtypes(include=['int','float']).columns.tolist()
-    df_md = pd.DataFrame(df[num_cols].isna().sum().loc[df[num_cols].isna().sum() > 0], columns=['missing_data_count'])
-    df_md['missing_data_percentage'] = df_md['missing_data_count'] / len(df)
-    df_md = df_md.sort_values(by='missing_data_percentage', ascending=True)
+    df_md = pd.DataFrame(df[num_cols].isna().sum().loc[df[num_cols].isna().sum() > 0], columns=['null_count'])
+    df_md['null_percentage'] = df_md['null_count'] / len(df)
+    df_md = df_md.sort_values(by='null_percentage', ascending=True)
     df_md['columns']=df_md.index
     df_md=df_md.reset_index(drop=True)
     
