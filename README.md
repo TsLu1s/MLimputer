@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
 data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
 
-train, test= train_test_split(data, train_size=0.8)
+train,test= train_test_split(data, train_size=0.8)
 train,test=train.reset_index(drop=True), test.reset_index(drop=True) # <- Required
 
 # All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","XGBoost","Lightgbm","Catboost"
