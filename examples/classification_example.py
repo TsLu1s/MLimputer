@@ -44,15 +44,19 @@ test_gbr=mli.transform_imput(dataset=test,fit_configs=imputer_gbr)
     
 ## Performance Evaluation Example - Imputation CrossValidation
 
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
-import atlantic as atl
+from atlantic.processing import AutoLabelEncoder
+
+
+cat_cols=[col for col in train.select_dtypes(include=['object']).columns if col != target]
 
 ## Preprocessing Data (Label Encoder)
+encoder = AutoLabelEncoder()
+encoder.fit(train_knn[cat_cols])
+df=encoder.transform(X=train_knn)
 
-le_fit=atl.fit_Label_Encoding(train_knn,target)
-df=atl.transform_Label_Encoding(train_knn,le_fit)
 df=df.reset_index(drop=True)
 df[target]=df[target].astype('category')
 
