@@ -1,13 +1,10 @@
-import pandas as pd
-import numpy as np
-import sys
-from tqdm import tqdm
+from atlantic.analysis import Analysis
+from atlantic.evaluation import Evaluation
 from sklearn.metrics import *
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor, GradientBoostingRegressor, StackingRegressor
+from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor, GradientBoostingRegressor
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.linear_model import TweedieRegressor
-import atlantic as atl
+import pandas as pd
 import catboost as cb
 import xgboost
 import lightgbm as lgb 
@@ -42,7 +39,7 @@ def imput_models(train:pd.DataFrame,
     
     if algo=='RandomForest':
         rf_params=parameters['RandomForest']
-        model = RandomForestRegressor(**rf_params) 
+        model = RandomForestRegressor(**rf_params)
         model.fit(X_train, y_train)
         
     elif algo=='ExtraTrees':
@@ -132,7 +129,7 @@ def cross_validation(dataset:pd.DataFrame, target:str, test_size:float=0.2, n_sp
     """
     
     y,list_metrics=dataset[target],[]
-    sv_pred=atl.target_type(dataset, target)[0]
+    sv_pred, _ = Analysis(target=target).target_type(X=dataset)
     for i in range(n_splits):
         X_train, X_test, y_train, y_test = train_test_split(dataset, y, test_size=test_size)
         print(f"Fold number: {i + 1}")
@@ -145,9 +142,9 @@ def cross_validation(dataset:pd.DataFrame, target:str, test_size:float=0.2, n_sp
             score = model.score(X_test, y_test)
             print(f"{model.__class__.__name__} model score: {score}")
             if sv_pred=='Class':
-                metrics=pd.DataFrame(atl.metrics_classification(y_test,y_pred),index=[0])
+                metrics=pd.DataFrame(Evaluation.metrics_classification(y_test,y_pred),index=[0])
             elif sv_pred=='Reg':
-                metrics = pd.DataFrame(atl.metrics_regression(y_test,y_pred),index=[0])
+                metrics = pd.DataFrame(Evaluation.metrics_regression(y_test,y_pred),index=[0])
             metrics["model"]=model.__class__.__name__
             metrics["n_splits"]=i+1
             metrics=metrics.reset_index(drop=True)
