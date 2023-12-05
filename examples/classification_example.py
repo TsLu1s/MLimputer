@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
 url="https://github.com/TsLu1s/MLimputer/blob/main/data/data_injection_quality.csv"
 
-data = pd.read_csv("https://github.com/TsLu1s/MLimputer/blob/main/data/data_injection_quality.csv", encoding='latin', delimiter=';')
+data = pd.read_csv(url, encoding='latin', delimiter=';')
 target="quality"
 
 ## Generate Random Null Values in Dataset
