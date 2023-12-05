@@ -7,7 +7,7 @@ warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
 # Source Data: https://github.com/airtlab/machine-learning-for-quality-prediction-in-plastic-injection-molding
 
-url="https://github.com/TsLu1s/MLimputer/blob/main/data/data_injection_quality.csv"
+url='https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/injection_quality.csv'
 
 data = pd.read_csv(url, encoding='latin', delimiter=';')
 target="quality"
