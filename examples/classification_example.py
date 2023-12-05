@@ -58,10 +58,8 @@ from sklearn.ensemble import RandomForestClassifier
 from atlantic.processing import AutoLabelEncoder
 
 ## Preprocessing Data (Label Encoder)
-
 cat_cols=[col for col in train_xgb.select_dtypes(include=['object']).columns if col != target]
 
-## Preprocessing Data (Label Encoder)
 encoder = AutoLabelEncoder()
 encoder.fit(train_xgb[cat_cols])
 df=encoder.transform(X=train_xgb)
