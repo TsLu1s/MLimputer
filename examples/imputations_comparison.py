@@ -11,21 +11,21 @@ import numpy as np
 import warnings
 warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
-########################################## Dataset 1
-sel_dataset="Dataset 1"
+## Dataset Selection
+sel_dataset="Dataset 1" # 
 
+########################################## Dataset 1
 if sel_dataset=="Dataset 1":
-    # Source Data: https://github.com/airtlab/machine-learning-for-quality-prediction-in-plastic-injection-molding
-    url='https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/injection_quality.csv'
-    data = pd.read_csv(url, encoding='latin', delimiter=';')
-    target="quality"
-    data[target]=data[target].astype('object')
+    # Source Data: https://www.openml.org/search?type=datastatus=activeid=41506
+    data=pd.read_csv('https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/NewFuelCar.csv', encoding='latin', delimiter=',')
+    data = data.drop('X', axis=1)
+    target="Tmax"
 
 ########################################## Dataset 2
 
 elif sel_dataset=="Dataset 2":
     # Source Data: "https://www.kaggle.com/datasets/fedesoriano/body-fat-prediction-dataset"
-    data=pd.read_csv('https://github.com/TsLu1s/MLimputer/raw/main/data/body_measurement.csv', encoding='latin', delimiter=',')
+    data=pd.read_csv('https://github.com/TsLu1s/MLimputer/raw/main/data/body_measurement.csv', encoding='latin', delimiter=',') 
     target="BodyFat"
 
 ########################################## Dataset 3
@@ -34,6 +34,14 @@ elif sel_dataset=="Dataset 3":
     # Source Data: "https://www.kaggle.com/code/sagardubey3/admission-prediction-with-linear-regression"
     data=pd.read_csv('https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/Admission_Predict.csv', encoding='latin', delimiter=',') 
     target="Chance of Admit "
+    
+########################################## Dataset 4
+if sel_dataset=="Dataset 4":
+    # Source Data: https://github.com/airtlab/machine-learning-for-quality-prediction-in-plastic-injection-molding
+    url='https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/injection_quality.csv'
+    data = pd.read_csv(url, encoding='latin', delimiter=';')
+    target="quality"
+    data[target]=data[target].astype('object')
 
 ## Generate Random Null Values in Dataset
 sel_cols = [col for col in data.columns if col != target] + [target]
