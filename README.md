@@ -28,8 +28,6 @@ Major frameworks used to built this project:
     
 Binary installer for the latest released version is available at the Python Package Index [(PyPI)](https://pypi.org/project/mlimputer/).   
 
-The source code is currently hosted on GitHub at: https://github.com/TsLu1s/MLimputer
-
 ## Installation  
 
 To install this package from Pypi repository run the following command:
