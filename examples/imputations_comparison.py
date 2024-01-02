@@ -25,7 +25,7 @@ if sel_dataset=="Dataset 1":
 
 elif sel_dataset=="Dataset 2":
     # Source Data: "https://www.kaggle.com/datasets/fedesoriano/body-fat-prediction-dataset"
-    data=pd.read_csv('https://github.com/TsLu1s/MLimputer/edit/main/data/body_measurement.csv', encoding='latin', delimiter=',') 
+    data=pd.read_csv('https://github.com/TsLu1s/MLimputer/raw/main/data/body_measurement.csv', encoding='latin', delimiter=',')
     target="BodyFat"
 
 ########################################## Dataset 3
