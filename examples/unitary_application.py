@@ -77,7 +77,7 @@ from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
         
 leaderboard_knn_imp=ms.cross_validation(X = train_knn,
-                                        target = "Target_Name_Col", 
+                                        target = target, 
                                         test_size = 0.2,
                                         n_splits = 3,
                                         models = [LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
