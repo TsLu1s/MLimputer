@@ -25,14 +25,14 @@ if sel_dataset=="Dataset 1":
 
 elif sel_dataset=="Dataset 2":
     # Source Data: "https://www.kaggle.com/datasets/fedesoriano/body-fat-prediction-dataset"
-    data=pd.read_csv('Journal Club - Luís Santos/body_measurement.csv', encoding='latin', delimiter=',') 
+    data=pd.read_csv('', encoding='latin', delimiter=',') 
     target="BodyFat"
 
 ########################################## Dataset 3
 
 elif sel_dataset=="Dataset 3":
     # Source Data: "https://www.kaggle.com/code/sagardubey3/admission-prediction-with-linear-regression"
-    data=pd.read_csv('Journal Club - Luís Santos/admission_predict.csv', encoding='latin', delimiter=',') 
+    data=pd.read_csv('https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/Admission_Predict.csv', encoding='latin', delimiter=',') 
     target="Chance of Admit "
 
 ## Generate Random Null Values in Dataset
