@@ -6,9 +6,9 @@
 ## Framework Contextualization <a name = "ta"></a>
 
 The `MLimputer` project constitutes an complete and integrated pipeline to automate the handling of missing values in datasets through regression prediction and aims at reducing bias and increase the precision of imputation results when compared to more classic imputation methods.
-This package provides multiple algorithm options to impute your data (shown bellow), in which every observed data column with existing missing values is fitted with a robust preprocessing approach and subsequently predicted.
+This package provides multiple algorithm options to impute your data, in which every observed data column with existing missing values is fitted with a robust preprocessing approach and subsequently predicted.
 
-The architecture design includes three main sections, these being: missing data analysis, data preprocessing and predictive model imputation which are organized in a customizable pipeline structure.
+The architecture design includes three main sections, these being: missing data analysis, data preprocessing and supervised model imputation which are organized in a customizable pipeline structure.
 
 This project aims at providing the following application capabilities:
 
@@ -38,7 +38,7 @@ pip install mlimputer
 
 # Usage Examples
     
-The first needed step after importing the package is to load a dataset (split it) and define your choosen imputation model in`fit_imput` function.
+The first needed step after importing the package is to load a dataset (split it) and define your choosen imputation model.
 The imputation model options for handling the missing data in your dataset are the following:
 * `RandomForest`
 * `ExtraTrees`
@@ -48,7 +48,7 @@ The imputation model options for handling the missing data in your dataset are t
 * `Lightgbm`
 * `Catboost`
 
-After fitting your imputation model, you can load the `imputer` variable into `fit_configs` parameter in the `transform_imput` function. From there you can impute the future datasets (validate, test ...) with the same data properties. Note, as it shows in the example bellow, you can also customize your model imputer parameters by changing it's configurations and then, implementing them in the `imputer_configs` function parameter.
+After creating a `MLimputer` object with your imputation selected model, you can then fit the missing data through the `fit_imput` method. From there you can impute the future datasets with `transform_imput` (validate, test ...) with the same data properties. Note, as it shows in the example bellow, you can also customize your model imputer parameters by changing it's configurations and then, implementing them in the `imputer_configs` parameter.
 
 Through the `cross_validation` function you can also compare the predictive performance evalution of multiple imputations, allowing you to validate which imputation model fits better your future predictions.
 
@@ -58,7 +58,9 @@ Importante Notes:
 
 ```py
 
-import mlimputer as mli
+from mlimputer.imputation import MLimputer
+import mlimputer.model_selection as ms
+import mlimputer.parameters as params
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -67,44 +69,45 @@ warnings.filterwarnings("ignore", category=Warning) #-> For a clean console
 
 data = pd.read_csv('csv_directory_path') # Dataframe Loading Example
 
-train,test=train_test_split(data, train_size=0.8)
-train,test=train.reset_index(drop=True), test.reset_index(drop=True) # <- Required
+train,test = train_test_split(data, train_size=0.8)
+train,test = train.reset_index(drop=True), test.reset_index(drop=True) # <- Required
 
 # All model imputation options ->  "RandomForest","ExtraTrees","GBR","KNN","XGBoost","Lightgbm","Catboost"
 
-# Model Imputer Customization
-hparameters=mli.imputer_parameters()
+# Customizing Hyperparameters Example
 
-# Customizing parameters settings
-hparameters["RandomForest"]["n_estimators"]=40
-hparameters["KNN"]["n_neighbors"]=5
+hparameters = params.imputer_parameters()
 print(hparameters)
+hparameters["KNN"]["n_neighbors"] = 5
+hparameters["RandomForest"]["n_estimators"] = 30
     
-# Imputation Example 1 : RandomForest
+# Imputation Example 1 : KNN
 
-imputer_rf=mli.fit_imput(dataset=train,imput_model="RandomForest",imputer_configs=hparameters)
-train_rf=mli.transform_imput(dataset=train,fit_configs=imputer_rf)
-test_rf=mli.transform_imput(dataset=test,fit_configs=imputer_rf)
+mli = MLimputer(imput_model = "KNN", imputer_configs = hparameters)
+mli.fit_imput(X = train)
+train_knn = mli.transform_imput(X = train)
+test_knn = mli.transform_imput(X = test)
 
-# Imputation Example 2 : KNN
+# Imputation Example 2 : RandomForest
 
-imputer_knn=mli.fit_imput(dataset=train,imput_model="KNN",imputer_configs=hparameters)
-train_knn=mli.transform_imput(dataset=train,fit_configs=imputer_knn)
-test_knn=mli.transform_imput(dataset=test,fit_configs=imputer_knn)
+mli = MLimputer(imput_model = "RandomForest", imputer_configs = hparameters)
+mli.fit_imput(X = train)
+train_rf = mli.transform_imput(X = train)
+test_rf = mli.transform_imput(X = test)
     
 #(...)
     
-## Performance Evaluation Example - Imputation CrossValidation
+## Performance Evaluation Regression - Imputation CrossValidation Example
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
         
-leaderboard_knn_imp=mli.cross_validation(dataset=train_knn,
-                                         target="Target_Name_Col", 
-                                         test_size=0.2,
-                                         n_splits=3,
-                                         models=[LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
+leaderboard_knn_imp=ms.cross_validation(X = train_knn,
+                                        target = "Target_Name_Col", 
+                                        test_size = 0.2,
+                                        n_splits = 3,
+                                        models = [LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
 
 ## Export Imputation Metadata
 

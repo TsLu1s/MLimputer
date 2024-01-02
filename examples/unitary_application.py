@@ -22,13 +22,13 @@ if sel_dataset=="Dataset 1":
 
 elif sel_dataset=="Dataset 2":
     # Source Data: "https://www.kaggle.com/datasets/fedesoriano/body-fat-prediction-dataset"
-    data=pd.read_csv('', encoding='latin', delimiter=',') 
+    data=pd.read_csv('https://github.com/TsLu1s/MLimputer/raw/main/data/body_measurement.csv', encoding='latin', delimiter=',') 
     target="BodyFat"
 
 ########################################## Dataset 3
 elif sel_dataset=="Dataset 3":
     # Source Data: "https://www.kaggle.com/code/sagardubey3/admission-prediction-with-linear-regression"
-    data=pd.read_csv('', encoding='latin', delimiter=',') 
+    data=pd.read_csv('https://raw.githubusercontent.com/TsLu1s/MLimputer/main/data/Admission_Predict.csv', encoding='latin', delimiter=',') 
     target="Chance of Admit "
 
 sel_cols = [col for col in data.columns if col != target] + [target]
@@ -77,7 +77,7 @@ from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
         
 leaderboard_knn_imp=ms.cross_validation(X = train_knn,
-                                        target = "Target_Name_Col", 
+                                        target = target, 
                                         test_size = 0.2,
                                         n_splits = 3,
                                         models = [LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])

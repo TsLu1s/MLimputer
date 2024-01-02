@@ -1,5 +1,5 @@
-scikit-learn>=1.0.50
-atlantic>=1.0.12
+scikit-learn>=1.0.2
+atlantic>=1.1.20
 catboost>=1.1.1
 xgboost>=1.7.3
 lightgbm>=3.3.5
