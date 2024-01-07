@@ -111,10 +111,10 @@ leaderboard_knn_imp=ms.cross_validation(X = train_knn,
 
 ## Export Imputation Metadata
 
-# KNN Imputation Metadata
+# Imputation Metadata
 import pickle 
-output = open("imputer_knn.pkl", 'wb')
-pickle.dump(imputer_knn, output)
+output = open("imputer.pkl", 'wb')
+pickle.dump(mli, output)
 
 ```  
     
