@@ -83,17 +83,17 @@ hparameters["RandomForest"]["n_estimators"] = 30
     
 # Imputation Example 1 : KNN
 
-mli = MLimputer(imput_model = "KNN", imputer_configs = hparameters)
-mli.fit_imput(X = train)
-train_knn = mli.transform_imput(X = train)
-test_knn = mli.transform_imput(X = test)
+mli_knn = MLimputer(imput_model = "KNN", imputer_configs = hparameters)
+mli_knn.fit_imput(X = train)
+train_knn = mli_knn.transform_imput(X = train)
+test_knn = mli_knn.transform_imput(X = test)
 
 # Imputation Example 2 : RandomForest
 
-mli = MLimputer(imput_model = "RandomForest", imputer_configs = hparameters)
-mli.fit_imput(X = train)
-train_rf = mli.transform_imput(X = train)
-test_rf = mli.transform_imput(X = test)
+mli_rf = MLimputer(imput_model = "RandomForest", imputer_configs = hparameters)
+mli_rf.fit_imput(X = train)
+train_rf = mli_rf.transform_imput(X = train)
+test_rf = mli_rf.transform_imput(X = test)
     
 #(...)
     
@@ -103,18 +103,18 @@ from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from catboost import CatBoostRegressor
         
-leaderboard_knn_imp=ms.cross_validation(X = train_knn,
-                                        target = "Target_Name_Col", 
-                                        test_size = 0.2,
-                                        n_splits = 3,
-                                        models = [LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
+leaderboard_rf_imp=ms.cross_validation(X = train_rf,
+                                       target = "Target_Name_Col", 
+                                       test_size = 0.2,
+                                       n_splits = 3,
+                                       models = [LinearRegression(), RandomForestRegressor(), CatBoostRegressor()])
 
 ## Export Imputation Metadata
 
 # Imputation Metadata
 import pickle 
-output = open("imputer.pkl", 'wb')
-pickle.dump(mli, output)
+output = open("imputer_rf.pkl", 'wb')
+pickle.dump(mli_rf, output)
 
 ```  
     
