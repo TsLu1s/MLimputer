@@ -60,7 +60,7 @@ Importante Notes:
 
 from mlimputer.imputation import MLimputer
 import mlimputer.model_selection as ms
-import mlimputer.parameters as params
+from mlimputer.parameters import imputer_parameters
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -76,7 +76,7 @@ train,test = train.reset_index(drop=True), test.reset_index(drop=True) # <- Requ
 
 # Customizing Hyperparameters Example
 
-hparameters = params.imputer_parameters()
+hparameters = imputer_parameters()
 print(hparameters)
 hparameters["KNN"]["n_neighbors"] = 5
 hparameters["RandomForest"]["n_estimators"] = 30
