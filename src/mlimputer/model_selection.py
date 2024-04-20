@@ -1,13 +1,15 @@
 from atlantic.analysis import Analysis
 from atlantic.evaluation import Evaluation
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor, GradientBoostingRegressor
-from sklearn.neighbors import KNeighborsRegressor
 import pandas as pd
-import catboost as cb
-import xgboost
-import lightgbm as lgb 
-from mlimputer.parameters import imputer_parameters
+from mlimputer.models_imputation import (RandomForestImputation,
+                                         ExtraTreesImputation,
+                                         GBRImputation,
+                                         KNNImputation,
+                                         XGBoostImputation,
+                                         CatBoostImputation,
+                                         LightGBMImputation)
+from mlimputer.parameters import imputer_parameters 
 
 parameters=imputer_parameters()
 
@@ -28,9 +30,7 @@ def imput_models(train : pd.DataFrame,
     model: trained machine learning model.
     """
     
-    sel_cols=list(train.columns)
-    sel_cols.remove(target)
-    sel_cols.append(target)
+    sel_cols = [col for col in train.columns if col != target] + [target]
     train = train[sel_cols]
     
     X_train = train.iloc[:, 0:(len(sel_cols)-1)].values
@@ -38,38 +38,38 @@ def imput_models(train : pd.DataFrame,
     
     if algo == 'RandomForest':
         rf_params = parameters['RandomForest']
-        model = RandomForestRegressor(**rf_params)
+        model = RandomForestImputation(**rf_params)
         model.fit(X_train, y_train)
         
     elif algo == 'ExtraTrees':
         et_params = parameters['ExtraTrees']
-        model = ExtraTreesRegressor(**et_params)
+        model = ExtraTreesImputation(**et_params)
         model.fit(X_train, y_train)
         
     elif algo == 'GBR':
         gbr_params = parameters['GBR']
-        model = GradientBoostingRegressor(**gbr_params)
+        model = GBRImputation(**gbr_params)
         model.fit(X_train, y_train)
         
     elif algo == 'KNN':
         knn_params = parameters['KNN']
-        model = KNeighborsRegressor(**knn_params)
+        model = KNNImputation(**knn_params)
         model.fit(X_train, y_train)
         
     elif algo == 'XGBoost':
         xg_params = parameters['XGBoost']
-        model = xgboost.XGBRegressor(**xg_params)
+        model = XGBoostImputation(**xg_params)
         model.fit(X_train, y_train)
     
     elif algo == "Catboost":
         cb_params = parameters['Catboost']
-        model = cb.CatBoostRegressor(**cb_params)
+        model = CatBoostImputation(**cb_params)
         model.fit(X_train, y_train)
         
     elif algo == "Lightgbm":
         lb_params = parameters['Lightgbm']
-        train_data = lgb.Dataset(X_train, label=y_train)
-        model = lgb.train(lb_params, train_data, num_boost_round=100)
+        model = LightGBMImputation(**lb_params)
+        model.fit(X_train, y_train)
         
     else:
         raise ValueError('Invalid model')
@@ -143,18 +143,17 @@ def cross_validation(X : pd.DataFrame,
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
             score = model.score(X_test, y_test)
-            print(f"{model.__class__.__name__} model score: {score}")
+            print(f"{model.__class__.__name__} model score: {round(score,4)}")
             if sv_pred == 'Class':
                 metrics = pd.DataFrame(Evaluation.metrics_classification(y_test,y_pred),index = [0])
             elif sv_pred == 'Reg':
                 metrics = pd.DataFrame(Evaluation.metrics_regression(y_test,y_pred),index = [0])
             metrics["model"] = model.__class__.__name__
-            metrics["n_splits"] = i+1
+            metrics["cv_folder"] = i+1
             metrics = metrics.reset_index(drop = True)
             list_metrics.append(metrics)
 
     leaderboard = pd.concat(list_metrics)
-    
     leaderboard = leaderboard.reset_index(drop = True)
     
     return leaderboard
