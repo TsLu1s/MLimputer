@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 setuptools.setup(
     name="mlimputer",
     version="1.0.10",
-    description="MLimputer - Null Imputation Framework for Supervised Machine Learning",
+    description="MLimputer - Missing Data Imputation Framework for Supervised Machine Learning",
     long_description=long_description,      
     long_description_content_type="text/markdown",
     url="https://github.com/TsLu1s/MLimputer",
