@@ -1,5 +1,5 @@
-from atlantic.analysis import Analysis
-from atlantic.evaluation import Evaluation
+from atlantic.processing.analysis import Analysis
+from atlantic.optimizer.evaluation import metrics_regression, metrics_classification
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from mlimputer.models_imputation import (RandomForestImputation,
@@ -145,9 +145,9 @@ def cross_validation(X : pd.DataFrame,
             score = model.score(X_test, y_test)
             print(f"{model.__class__.__name__} model score: {round(score,4)}")
             if sv_pred == 'Class':
-                metrics = pd.DataFrame(Evaluation.metrics_classification(y_test,y_pred),index = [0])
+                metrics = metrics_classification(y_test,y_pred)
             elif sv_pred == 'Reg':
-                metrics = pd.DataFrame(Evaluation.metrics_regression(y_test,y_pred),index = [0])
+                metrics = metrics_regression(y_test,y_pred)
             metrics["model"] = model.__class__.__name__
             metrics["cv_folder"] = i+1
             metrics = metrics.reset_index(drop = True)
