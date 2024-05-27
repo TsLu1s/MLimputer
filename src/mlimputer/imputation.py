@@ -1,7 +1,7 @@
 import pandas as pd
 from tqdm import tqdm
-from atlantic.processing import AutoLabelEncoder
-from atlantic.imputation import AutoSimpleImputer
+from atlantic.processing.encoders import AutoLabelEncoder
+from atlantic.imputers.imputation import AutoSimpleImputer
 from mlimputer.parameters import imputer_parameters
 from mlimputer.model_selection import missing_report, imput_models
 
